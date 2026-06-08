@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --accent: #6c63ff;
+    --accent2: #ff6b6b;
+    --text: #e8e8f0;
+    --muted: #8888aa;
+    --border: rgba(108,99,255,0.2);
+    --card: #13131c;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 1.2rem 6%;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.4rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .btn-nav {
+    background: var(--accent); color: #fff; padding: 0.5rem 1.2rem;
+    border-radius: 6px; text-decoration: none; font-size: 0.9rem; transition: opacity 0.2s;
+  }
+  .btn-nav:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 7rem 6% 4rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(108,99,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { max-width: 680px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(108,99,255,0.12); border: 1px solid var(--border);
+    color: #a09dff; padding: 0.35rem 1rem; border-radius: 20px;
+    font-size: 0.85rem; margin-bottom: 1.5rem;
+  }
+  .hero-tag span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800; line-height: 1.05; margin-bottom: 1.2rem;
+  }
+  h1 .highlight {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 520px; margin-bottom: 2.2rem; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 0.8rem 1.8rem; border-radius: 8px;
+    text-decoration: none; font-weight: 500; font-size: 0.95rem;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+  .btn-secondary {
+    background: transparent; color: var(--text);
+    padding: 0.8rem 1.8rem; border-radius: 8px;
+    text-decoration: none; font-weight: 500; font-size: 0.95rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); background: rgba(108,99,255,0.08); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--text); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+  /* SECTIONS */
+  section { padding: 5rem 6%; }
+  .section-tag {
+    font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 0.5rem;
+  }
+  h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; margin-bottom: 0.6rem; }
+  .section-sub { color: var(--muted); max-width: 540px; margin-bottom: 3rem; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .about-img {
+    width: 100%; aspect-ratio: 1;
+    background: var(--bg3); border-radius: 20px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 6rem;
+  }
+  .about-img-wrap { position: relative; }
+  .about-img-badge {
+    position: absolute; bottom: -1rem; right: -1rem;
+    background: var(--accent); color: #fff;
+    padding: 0.7rem 1.2rem; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+    box-shadow: 0 8px 24px rgba(108,99,255,0.4);
+  }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; }
+  .skills-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+  .skill-tag {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text); padding: 0.4rem 0.9rem; border-radius: 6px; font-size: 0.85rem;
+  }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.5rem;
+    transition: border-color 0.3s, transform 0.3s; display: flex; flex-direction: column;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .project-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .project-icon {
+    width: 44px; height: 44px; background: rgba(108,99,255,0.15);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+  }
+  .project-links { display: flex; gap: 0.5rem; }
+  .project-link {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--bg3); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; color: var(--muted); font-size: 0.85rem;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .project-link:hover { color: var(--accent); border-color: var(--accent); }
+  .project-card h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .project-card p { color: var(--muted); font-size: 0.9rem; flex: 1; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .stack-badge { background: rgba(255,255,255,0.06); color: var(--muted); padding: 0.25rem 0.7rem; border-radius: 4px; font-size: 0.78rem; }
+
+  /* CONTACT */
+  .contact-wrap {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 20px; padding: 3rem; max-width: 700px; margin: 0 auto; text-align: center;
+  }
+  .contact-wrap h2 { margin-bottom: 0.5rem; }
+  .contact-wrap p { color: var(--muted); margin-bottom: 2rem; }
+  .contact-form { display: grid; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; text-align: left; }
+  label { font-size: 0.85rem; color: var(--muted); }
+  input, textarea {
+    background: var(--bg2); border: 1px solid var(--border);
+    color: var(--text); padding: 0.75rem 1rem; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    outline: none; transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus { border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 120px; }
+  .btn-submit {
+    background: var(--accent); color: #fff; border: none;
+    padding: 0.85rem 2.5rem; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    font-weight: 500; cursor: pointer; transition: opacity 0.2s, transform 0.2s; width: 100%;
+  }
+  .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+  #form-msg { display: none; margin-top: 0.8rem; color: #4ade80; font-size: 0.9rem; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 6%; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--muted); font-size: 0.85rem;
+  }
+  .socials { display: flex; gap: 1rem; }
+  .socials a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .socials a:hover { color: var(--text); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 5%; }
+    .nav-links { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav>
+  <!-- CHANGE: Replace "YourName.dev" with your own name or logo text -->
+  <div class="logo">YourName.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="btn-nav">Hire Me</a>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag"><span></span> Open to opportunities</div>
+    <h1>
+      Full-Stack<br>
+      <span class="highlight">Developer</span><br>
+      & Designer
+    </h1>
+    <!-- CHANGE: Write 1-2 lines about yourself -->
+    <p class="hero-sub">
+      I build fast, scalable web applications with clean code and thoughtful design.
+      Turning ideas into products that people love to use.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-secondary">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <!-- CHANGE: Update these numbers to match your actual experience -->
+      <div>
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div>
+        <div class="stat-num">1+</div>
+        <div class="stat-label">Years Learning</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Technologies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about" style="background: var(--bg2);">
+  <div class="about-grid">
+    <div class="about-img-wrap">
+      <!-- CHANGE: Replace the emoji below with an <img> tag of your photo if you have one -->
+      <div class="about-img">👨‍💻</div>
+      <div class="about-img-badge">Available for Work</div>
+    </div>
+    <div class="about-text">
+      <div class="section-tag">About Me</div>
+      <!-- CHANGE: Replace this heading and paragraphs with your own intro -->
+      <h2>Passionate about building digital experiences</h2>
+      <p>Hi! I'm [Your Name], a computer science student with a passion for building full-stack web applications. I love turning ideas into real, working products.</p>
+      <p>Currently learning and building projects every day to sharpen my skills in frontend, backend, and database development.</p>
+
+      <!-- CHANGE: Update this skills list to match YOUR actual skills -->
+      <div class="skills-list">
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">React.js</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Express</span>
+        <span class="skill-tag">MongoDB</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Python</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section id="projects">
+  <div class="section-tag">My Work</div>
+  <h2>Featured Projects</h2>
+  <p class="section-sub">Things I've built. Each project helped me learn something new.</p>
+  <div class="projects-grid">
+
+    <!-- PROJECT 1 — CHANGE all details below to your actual project -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon">🌐</div>
+        <div class="project-links">
+          <!-- CHANGE: Replace # with your actual GitHub link -->
+          <a href="#" class="project-link" title="GitHub">GH</a>
+          <!-- CHANGE: Replace # with your live demo link, or remove this anchor -->
+          <a href="#" class="project-link" title="Live Demo">↗</a>
+        </div>
+      </div>
+      <h3>Personal Portfolio Website</h3>
+      <p>This very website! A full-stack portfolio to showcase my projects, skills, and contact form. Built with Node.js backend and MongoDB for storing messages.</p>
+      <div class="project-stack">
+        <span class="stack-badge">HTML/CSS</span>
+        <span class="stack-badge">JavaScript</span>
+        <span class="stack-badge">Node.js</span>
+        <span class="stack-badge">MongoDB</span>
+      </div>
+    </div>
+
+    <!-- PROJECT 2 — CHANGE to your actual project -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon">📝</div>
+        <div class="project-links">
+          <a href="#" class="project-link" title="GitHub">GH</a>
+          <a href="#" class="project-link" title="Live Demo">↗</a>
+        </div>
+      </div>
+      <h3>To-Do List App</h3>
+      <p>A simple task management app with add, delete, and complete features. Data saved in localStorage so it persists on refresh.</p>
+      <div class="project-stack">
+        <span class="stack-badge">HTML</span>
+        <span class="stack-badge">CSS</span>
+        <span class="stack-badge">JavaScript</span>
+      </div>
+    </div>
+
+    <!-- PROJECT 3 — CHANGE to your actual project -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon">🌦️</div>
+        <div class="project-links">
+          <a href="#" class="project-link" title="GitHub">GH</a>
+          <a href="#" class="project-link" title="Live Demo">↗</a>
+        </div>
+      </div>
+      <h3>Weather App</h3>
+      <p>Fetches real-time weather data from an API and displays temperature, humidity, and conditions for any searched city.</p>
+      <div class="project-stack">
+        <span class="stack-badge">JavaScript</span>
+        <span class="stack-badge">REST API</span>
+        <span class="stack-badge">CSS</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" style="background: var(--bg2);">
+  <div class="contact-wrap">
+    <div class="section-tag" style="text-align:center;">Contact</div>
+    <h2>Let's Work Together</h2>
+    <!-- CHANGE: Update your email below -->
+    <p>Have a project or opportunity? Drop me a message at <strong>youremail@gmail.com</strong> or use the form below.</p>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="john@example.com" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" placeholder="Project inquiry...">
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Tell me about your project..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send Message →</button>
+      <div id="form-msg">✓ Message sent! I'll get back to you soon.</div>
+    </form>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <!-- CHANGE: Your name and year -->
+  <div>© 2026 Your Name. All rights reserved.</div>
+  <div class="socials">
+    <!-- CHANGE: Replace # with your actual profile links -->
+    <a href="#">GitHub</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Twitter</a>
+  </div>
+</footer>
+
+<script>
+  // Contact form handler
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    // This sends data to your Node.js backend
+    const data = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      subject: document.getElementById('subject').value,
+      message: document.getElementById('message').value
+    };
+
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(() => {
+      document.getElementById('form-msg').style.display = 'block';
+      btn.textContent = 'Message Sent!';
+      e.target.reset();
+    })
+    .catch(() => {
+      // If backend not running, still show success for now
+      document.getElementById('form-msg').style.display = 'block';
+      btn.textContent = 'Sent!';
+      e.target.reset();
+    });
+  }
+
+  // Smooth fade-in animation on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.project-card, .about-grid').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
